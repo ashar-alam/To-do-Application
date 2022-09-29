@@ -12,4 +12,8 @@ static const String homeScreen = 'Home Screen';
 static const String searchForTaskEventsetc = 'Search for tasks, events, etc...';
 static const String next7Days = 'Next 7 Days';
 static const String allTasks = 'All Tasks';
+static const String doThis = 'Do This!';
+static const String title  = 'Title';
+static const String thereIsNoTasks = 'There is no tasks..'; 
+static const String welcomeToOurTodoApplication = 'Welcome to our To-Do-Application';
 }

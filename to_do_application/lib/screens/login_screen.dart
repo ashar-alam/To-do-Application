@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_application/screens/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 
 import '../utils/string_manager.dart';
@@ -23,12 +24,12 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Image.asset("assets/imageIcon.jpg"),
-                Padding(
+          child: Column(
+            children: [
+              Image.asset("assets/imageIcon.jpg"),
+              Container(
+                color: AppStyle.lightGrey,
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
@@ -64,7 +65,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                            // FirebaseServices();
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -135,8 +137,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
