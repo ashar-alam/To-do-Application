@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_application/screens/all_task.dart';
 import 'package:to_do_application/screens/do_this_screen.dart';
+import 'package:to_do_application/screens/login_screen.dart';
+import 'package:to_do_application/screens/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 import 'package:to_do_application/utils/string_manager.dart';
 
@@ -19,6 +21,25 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
         centerTitle: true,
         backgroundColor: AppStyle.primaryLight,
         title: const Text(StringManager.homeScreen),
+        actions: [
+          TextButton.icon(
+            // style: ButtonStyle(),
+            onPressed: () {
+              FirebaseServices().signOutGoogle();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MyLoginScreen()));
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: AppStyle.white,
+            ),
+            label: const Text(
+              StringManager.logOut,
+              style: TextStyle(color: AppStyle.white),
+            ),
+          ),
+          // IconButton(onPressed: (){}, icon: Icon(Icons.logout))
+        ],
       ),
       body: Container(
         color: AppStyle.lightGrey,
@@ -27,7 +48,10 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(StringManager.welcomeToOurTodoApplication,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const Text(
+                StringManager.welcomeToOurTodoApplication,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               // TextField(
               //   decoration: InputDecoration(
               //     // focusColor: AppStyle.black,
@@ -54,7 +78,8 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                       height: 100,
                       child: InkWell(
                         onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyAllTask()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const MyAllTask()));
                         },
                         child: Card(
                           elevation: 10,
@@ -95,18 +120,21 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyDoThisScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const MyDoThisScreen()));
                         },
                       ),
                     ),
                   ],
                 ),
               ),
-              FloatingActionButton(onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyDoThisScreen()));
-              },
-              backgroundColor: AppStyle.primaryLight,
-              child: const Icon(Icons.add),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MyDoThisScreen()));
+                },
+                backgroundColor: AppStyle.primaryLight,
+                child: const Icon(Icons.add),
               )
             ],
           ),

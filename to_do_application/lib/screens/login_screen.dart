@@ -1,3 +1,8 @@
+
+
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_application/screens/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
@@ -64,9 +69,15 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () {
-                            // FirebaseServices();
-                            // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                          onPressed: () async {
+                            User? user = await FirebaseServices().signInWithGoogle();
+                            if (user != null) {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                            }else{
+                              log("Something Went wrong");
+                            }
+                            //   // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                            
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

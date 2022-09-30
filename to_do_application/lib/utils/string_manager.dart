@@ -16,4 +16,7 @@ static const String doThis = 'Do This!';
 static const String title  = 'Title';
 static const String thereIsNoTasks = 'There is no tasks..'; 
 static const String welcomeToOurTodoApplication = 'Welcome to our To-Do-Application';
+static const String logOut = 'LogOut';
+static const String days = 'Day\'s';
+static const String date = 'Date';
 }
