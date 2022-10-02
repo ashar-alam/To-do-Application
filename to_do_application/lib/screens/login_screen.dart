@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_application/screens/services/firebase_services.dart';
+import 'package:to_do_application/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 
 import '../utils/string_manager.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_application/screens/all_task.dart';
 import 'package:to_do_application/screens/do_this_screen.dart';
 import 'package:to_do_application/screens/login_screen.dart';
-import 'package:to_do_application/screens/services/firebase_services.dart';
+import 'package:to_do_application/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 import 'package:to_do_application/utils/string_manager.dart';
 
