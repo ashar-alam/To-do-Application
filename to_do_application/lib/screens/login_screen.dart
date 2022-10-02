@@ -1,4 +1,10 @@
+
+
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_application/screens/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 
 import '../utils/string_manager.dart';
@@ -23,12 +29,12 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Image.asset("assets/imageIcon.jpg"),
-                Padding(
+          child: Column(
+            children: [
+              Image.asset("assets/imageIcon.jpg"),
+              Container(
+                color: AppStyle.lightGrey,
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
@@ -63,8 +69,15 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                          onPressed: () async {
+                            User? user = await FirebaseServices().signInWithGoogle();
+                            if (user != null) {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                            }else{
+                              log("Something Went wrong");
+                            }
+                            //   // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
+                            
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -135,8 +148,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
