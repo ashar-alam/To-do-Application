@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_application/utils/app_style.dart';
 import 'package:to_do_application/utils/string_manager.dart';
+import 'package:to_do_application/widgets/list_view.dart';
 
 class MyAllTask extends StatefulWidget {
   const MyAllTask({super.key});
@@ -26,12 +27,14 @@ class _MyAllTaskState extends State<MyAllTask> {
         color: AppStyle.lightGrey,
         child: const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              StringManager.thereIsNoTasks,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
-          ),
+          child: 
+          MyListView(),
+          // Center(
+          //   child: Text(
+          //     StringManager.thereIsNoTasks,
+          //     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          //   ),
+          // ),
         ),
       ),
     );

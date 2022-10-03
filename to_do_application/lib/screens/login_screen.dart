@@ -1,9 +1,8 @@
-
-
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_application/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 
@@ -43,21 +42,14 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       const Text(
                         textAlign: TextAlign.center,
                         StringManager
                             .seeHowMillionsOfPeopleRelyOnAnyDoToStayOrganized,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: AppStyle.grey,
-                        ),
+                        style: TextStyle(fontSize: 18, color: AppStyle.grey),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: Utils.getWidth(context) / 1.2,
                         height: Utils.getHight(context) / 15,
@@ -70,14 +62,19 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            User? user = await FirebaseServices().signInWithGoogle();
+                            User? user = await Provider.of<FirebaseServices>(
+                                    context,
+                                    listen: false)
+                                .signInWithGoogle();
                             if (user != null) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
-                            }else{
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => const MyHomeScreen()),
+                              );
+                            } else {
                               log("Something Went wrong");
                             }
-                            //   // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
-                            
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyHomeScreen()));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -88,9 +85,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                                 width: 30,
                                 height: 30,
                               ),
-                              const SizedBox(
-                                width: 20,
-                              ),
+                              const SizedBox(width: 20),
                               const Text(
                                 StringManager.continueWithGoolge,
                                 style: TextStyle(
@@ -100,9 +95,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: Utils.getWidth(context) / 1.2,
                         height: Utils.getHight(context) / 15,
@@ -130,21 +123,22 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                               const Text(
                                 StringManager.continueWithGmail,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: AppStyle.black),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: AppStyle.black,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                              StringManager.dontHaveAccountCreateAnAccount))
+                        onPressed: () {},
+                        child: const Text(
+                          StringManager.dontHaveAccountCreateAnAccount,
+                        ),
+                      ),
                     ],
                   ),
                 ),

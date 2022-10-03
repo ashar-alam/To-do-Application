@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_application/model/to_do_list.dart';
+import 'package:to_do_application/services/firebase_services.dart';
 import 'package:to_do_application/utils/app_style.dart';
 import 'package:to_do_application/utils/string_manager.dart';
 
@@ -17,6 +19,7 @@ class MyDoThisScreen extends StatefulWidget {
 
 class _MyDoThisScreenState extends State<MyDoThisScreen> {
   List<String> list = <String>[
+    'Select day',
     'Monday',
     'Tuesday',
     'Thursday',
@@ -27,13 +30,11 @@ class _MyDoThisScreenState extends State<MyDoThisScreen> {
   // String? dropdownValue;
   TextEditingController dateinput = TextEditingController();
 
-  List<Task> taskList = [
-    // 'hello', 'ashar', 'welcome', 'world'
-  ];
+  List<Task> taskList = [];
   // String text = '';
   List<bool> isChecked = [];
   var indexHolder = [];
-  // TextEditingController title = TextEditingController();
+  TextEditingController title = TextEditingController();
   @override
   void initState() {
     // dateinput.text = "";
@@ -45,8 +46,8 @@ class _MyDoThisScreenState extends State<MyDoThisScreen> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
-    // title.dispose();
+    // Clean up the controller when the widget is disposed;
+    title.dispose();
     super.dispose();
   }
 
@@ -101,18 +102,16 @@ class _MyDoThisScreenState extends State<MyDoThisScreen> {
               log(newTask.toString());
               // String title1 = newTask.title;
               taskList.insert(0, (newTask));
-              // TODO: call firebase service to add task
+              Provider.of<FirebaseServices>(context,listen: false).addTask(newTask);
               // FirebaseServices().addTask(newTask);
               isChecked.add(false);
             }
-            // title.clear();
-            // MyTextFormFeild();
-            // data.removeLast();
+            title.clear();
+            taskList.removeLast();
             // print("hello$data isChecked$isChecked");
           });
         },
         child: const Text("Save"),
-        // const Icon(Icons.add),
       ),
       body: Form(
         key: formkey,
@@ -124,35 +123,37 @@ class _MyDoThisScreenState extends State<MyDoThisScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    DropdownButton<String>(
-                      hint: const Text("Days"),
-                      value: newTask.day.isEmpty ? "Monday" : newTask.day,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      elevation: 5,
-                      style: const TextStyle(color: AppStyle.primaryLight),
-                      // underline: Container(
-                      //   height: 2,
-                      // ),
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return "Day is required";
-                      //   }
-                      //   return null;
-                      // },
-                      // onSaved: (newValue) {
-                      //   newTask.day = newValue!;
-                      // },
-                      onChanged: (String? value) {
-                        setState(() {
-                          newTask.day = value!;
-                        });
-                      },
-                      items: list.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        hint: const Text("Days"),
+                        value: newTask.day.isEmpty ? 'Select day': newTask.day,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        elevation: 5,
+                        style: const TextStyle(color: AppStyle.primaryLight),
+                        // underline: Container(
+                        //   height: 2,
+                        // ),
+                        validator: (value) {
+                          if (value!.isEmpty || value == 'Select day') {
+                            return "Day is required";
+                          }
+                          return null;
+                        },
+                        onSaved: (newValue) {
+                          newTask.day = newValue!;
+                        },
+                        onChanged: (String? value) {
+                          setState(() {
+                            newTask.day = value!;
+                          });
+                        },
+                        items: list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                     SizedBox(
                       width: Utils.getWidth(context) / 3,
@@ -220,7 +221,12 @@ class _MyDoThisScreenState extends State<MyDoThisScreen> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  // TODO: add validator here.
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter title';
+                                    }
+                                    return null;
+                                  },
                                   onSaved: (newValue) {
                                     newTask.title = newValue!;
                                   },
